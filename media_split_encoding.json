@@ -122,11 +122,6 @@
           "value": "ffmpeg -i {source_path} -ss {start_index} -to {stop_index} -y -vn -codec:a pcm_s24le {output_path}"
         },
         {
-          "id": "output_path",
-          "type": "template",
-          "value": "{work_directory}/{workflow_id}/output-{sdk_start_index}-{sdk_stop_index}.wav"
-        },
-        {
           "id": "start_index",
           "type": "template",
           "value": "<%= sdk_start_index / 1000.0 %>"
@@ -137,9 +132,14 @@
           "value": "<%= (sdk_stop_index + 1) / 1000.0 %>"
         },
         {
+          "id": "output_path",
+          "type": "template",
+          "value": "{work_directory}/{workflow_id}/output-{sdk_start_index}-{sdk_stop_index}.wav"
+        },
+        {
           "id": "destination_path",
           "type": "template",
-          "value": "{output_path}"
+          "value": "{work_directory}/{workflow_id}/output-{sdk_start_index}-{sdk_stop_index}.wav"
         }
       ],
       "parent_ids": [
@@ -147,6 +147,45 @@
       ],
       "required_to_start": [
         2
+      ]
+    },
+    {
+      "icon": "file_upload",
+      "id": 4,
+      "label": "Upload generated elements to S3",
+      "name": "job_transfer",
+      "parameters": [
+        {
+            "id": "input_filter",
+            "type": "filter",
+            "value": {"ends_with": [".wav"]}
+        },
+        {
+          "id": "filename",
+          "type": "template",
+          "value": "{workflow_id}/<%= Path.basename(source_path) %>"
+        },
+        {
+          "id": "destination_bucket",
+          "type": "string",
+          "value": "test"
+        },
+        {
+          "id": "options",
+          "type": "template",
+          "value": "<%= # replace by custom options %>"
+        },
+        {
+          "id": "command_template",
+          "type": "string",
+          "value": "aws s3 cp {options} {source_path} s3://{destination_bucket}/{filename}"
+        }
+      ],
+      "parent_ids": [
+        3
+      ],
+      "required_to_start": [
+        3
       ]
     }
   ],
