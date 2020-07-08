@@ -132,24 +132,24 @@
             "value": {"ends_with": [".wav"]}
         },
         {
-          "id": "filename",
-          "type": "template",
-          "value": "{workflow_id}/<%= Path.basename(source_path) %>"
+          "id": "destination_prefix",
+          "type" : "credential",
+          "value" : "S3_BUCKET"
         },
         {
-          "id": "destination_bucket",
-          "type": "string",
-          "value": "test"
+          "id": "destination_access_key",
+          "type" : "credential",
+          "value" : "S3_ACCESS_KEY"
         },
         {
-          "id": "options",
-          "type": "template",
-          "value": "<%= # replace by custom options %>"
+          "id": "destination_secret_key",
+          "type" : "credential",
+          "value" : "S3_SECRET_KEY"
         },
         {
-          "id": "command_template",
-          "type": "string",
-          "value": "aws s3 cp {options} {source_path} s3://{destination_bucket}/{filename}"
+          "id": "destination_region",
+          "type" : "credential",
+          "value" : "S3_REGION"
         }
       ],
       "parent_ids": [
