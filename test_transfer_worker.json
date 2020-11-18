@@ -1,0 +1,134 @@
+{
+  "icon": "swap_vert",
+  "identifier": "test_transfer",
+  "label": "Test du worker de transfert",
+  "parameters": [
+    {
+      "id": "source_filename",
+      "type": "string"
+    }
+  ],
+  "start_parameters": [
+    {
+      "id": "source_filename",
+      "label": "Source file",
+      "type": "file"
+    }
+  ],
+  "steps": [
+    {
+      "icon": "file_download",
+      "id": 0,
+      "label": "Download file to S3",
+      "name": "job_transfer",
+      "parameters": [
+        {
+          "id": "source_paths",
+          "type": "array_of_templates",
+          "value": [
+            "{source_filename}"
+          ]
+        },
+        {
+          "id": "source_secret",
+          "type" : "string",
+          "store": "BACKEND",
+          "value" : "S3_SECRET"
+        }
+      ]
+    },
+    {
+      "icon": "file_download",
+      "id": 4,
+      "label": "Download file from HTTP",
+      "name": "job_transfer",
+      "parameters": [
+        {
+          "id": "source_paths",
+          "type": "array_of_strings",
+          "value": [
+              "index.html"
+          ]
+        },
+        {
+          "id": "source_secret",
+          "type" : "string",
+          "store": "BACKEND",
+          "value" : "HTTP_SECRET"
+        }
+      ]
+    },
+    {
+      "icon": "file_upload",
+      "id": 1,
+      "label": "Upload file to FTP",
+      "name": "job_transfer",
+      "parameters": [
+        {
+          "id": "destination_secret",
+          "type" : "string",
+          "store": "ENV",
+          "value" : "FTP_SECRET"
+        }
+      ],
+      "parent_ids": [
+        0
+      ],
+      "required_to_start": [
+        0
+      ]
+    },
+    {
+      "icon": "file_download",
+      "id": 2,
+      "label": "Download file from FTP",
+      "name": "job_transfer",
+      "parameters": [
+        {
+          "id": "source_secret",
+          "type" : "string",
+          "store": "ENV",
+          "value" : "FTP_SECRET"
+        }
+      ],
+      "parent_ids": [
+        1
+      ],
+      "required_to_start": [
+        1
+      ]
+    },
+    {
+      "icon": "file_upload",
+      "id": 3,
+      "label": "Upload file to S3",
+      "name": "job_transfer",
+      "skip_destination_path": true,
+      "parameters": [
+        {
+          "id": "destination_secret",
+          "type" : "string",
+          "store": "BACKEND",
+          "value" : "S3_SECRET"
+        },
+        {
+          "id": "destination_path",
+          "type": "template",
+          "value": "{name}"
+        }
+      ],
+      "parent_ids": [
+        2
+      ],
+      "required_to_start": [
+        2
+      ]
+    }
+  ],
+  "tags": [
+    "demo"
+  ],
+  "version_major": 0,
+  "version_micro": 1,
+  "version_minor": 0
+}
