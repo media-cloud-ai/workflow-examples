@@ -1,7 +1,7 @@
 {
   "icon": "swap_vert",
   "identifier": "test_transfer",
-  "label": "Test du worker de transfert",
+  "label": "Test of transfer worker",
   "parameters": [
     {
       "id": "source_filename",
@@ -130,5 +130,5 @@
   ],
   "version_major": 0,
   "version_micro": 1,
-  "version_minor": 0
+  "version_minor": 1
 }
