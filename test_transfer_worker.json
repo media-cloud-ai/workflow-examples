@@ -67,7 +67,7 @@
         {
           "id": "destination_secret",
           "type" : "string",
-          "store": "ENV",
+          "store": "BACKEND",
           "value" : "FTP_SECRET"
         }
       ],
@@ -87,7 +87,7 @@
         {
           "id": "source_secret",
           "type" : "string",
-          "store": "ENV",
+          "store": "BACKEND",
           "value" : "FTP_SECRET"
         }
       ],
@@ -129,6 +129,6 @@
     "demo"
   ],
   "version_major": 0,
-  "version_micro": 1,
+  "version_micro": 2,
   "version_minor": 1
 }
