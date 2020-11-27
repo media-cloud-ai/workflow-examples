@@ -1,0 +1,33 @@
+{
+    "schema_version": "1.8",
+    "icon": "psychology",
+    "identifier": "fast_object_detection_demo",
+    "label": "Fast Object Detection Demo",
+    "parameters": [
+        {
+            "id": "source_filename",
+            "type": "string"
+        }
+    ],
+    "steps": [
+        {
+            "icon": "file_download",
+            "id": 0,
+            "label": "Download source element",
+            "name": "job_transfer_optim",
+            "parameters": [
+                {
+                    "id": "number_of_segments",
+                    "type": "integer",
+                    "value": 10
+                }
+            ]
+        }
+    ],
+    "tags": [
+        "demo"
+    ],
+    "version_major": 0,
+    "version_micro": 0,
+    "version_minor": 4
+}

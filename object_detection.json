@@ -1,0 +1,100 @@
+{
+    "icon": "psychology",
+    "identifier": "object_detection_demo",
+    "label": "Object Detection Demo",
+    "parameters": [
+        {
+            "id": "source_filename",
+            "type": "string"
+        }
+    ],
+    "rights": [
+        {
+            "action": "view",
+            "groups": [
+                "techinician",
+                "editor"
+            ]
+        },
+        {
+            "action": "create",
+            "groups": [
+                "editor"
+            ]
+        },
+        {
+            "action": "retry",
+            "groups": [
+                "techinician"
+            ]
+        },
+        {
+            "action": "abort",
+            "groups": [
+                "techinician"
+            ]
+        },
+        {
+            "action": "delete",
+            "groups": [
+                "administrator"
+            ]
+        }
+    ],
+    "schema_version": "1.8",
+    "start_parameters": [
+        {
+            "accept": ".mp4,.mov,.mxf",
+            "id": "source_filename",
+            "label": "Source file",
+            "type": "file"
+        }
+    ],
+    "steps": [
+        {
+            "icon": "file_download",
+            "id": 0,
+            "label": "Download source element",
+            "name": "job_transfer_optim",
+            "parameters": [
+                {
+                    "id": "source_paths",
+                    "type": "array_of_templates",
+                    "value": [
+                        "{source_filename}"
+                    ]
+                },
+                {
+                    "id": "command_template",
+                    "type": "string",
+                    "value": "aws s3 cp --quiet s3://france-tv-media-cloud-ai/{source_path} {destination_path}"
+                }
+            ]
+        },
+        {
+            "icon": "psychology",
+            "id": 1,
+            "label": "Object detection",
+            "name": "job_object_detection",
+            "parameters": [
+                {
+                    "id": "confidence",
+                    "type": "integer",
+                    "value": 80
+                }
+            ],
+            "parent_ids": [
+                0
+            ],
+            "required_to_start": [
+                0
+            ]
+        }
+    ],
+    "tags": [
+        "demo"
+    ],
+    "version_major": 0,
+    "version_micro": 0,
+    "version_minor": 1
+}

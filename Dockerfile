@@ -4,7 +4,7 @@ ADD . /workflows
 WORKDIR /workflows
 
 RUN pip3 install --no-cache --upgrade pip jsonschema && \
-    wget http://media-cloud.ai/standard/1.7/workflow-definition.schema.json && \
+    wget http://media-cloud.ai/standard/1.8/workflow-definition.schema.json && \
     mv workflow-definition.schema.json / && \
     ls && \
     pwd && \
