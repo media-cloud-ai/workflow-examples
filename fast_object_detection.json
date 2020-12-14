@@ -1,7 +1,7 @@
 {
-    "icon": "swap_vert",
-    "identifier": "test_transfer",
-    "label": "Test of transfer worker",
+    "icon": "psychology",
+    "identifier": "fast_object_detection_demo",
+    "label": "Fast Object Detection Demo",
     "parameters": [
         {
             "id": "source_filename",
@@ -44,6 +44,7 @@
     "schema_version": "1.8",
     "start_parameters": [
         {
+            "accept": ".mp4,.mov,.mxf",
             "id": "source_filename",
             "label": "Source file",
             "type": "file"
@@ -53,8 +54,8 @@
         {
             "icon": "file_download",
             "id": 0,
-            "label": "Download file from S3",
-            "name": "job_transfer",
+            "label": "Download source element",
+            "name": "job_transfer_optim",
             "parameters": [
                 {
                     "id": "source_paths",
@@ -64,45 +65,27 @@
                     ]
                 },
                 {
-                    "id": "source_secret",
-                    "store": "BACKEND",
+                    "id": "command_template",
                     "type": "string",
-                    "value": "S3_SECRET"
+                    "value": "aws s3 cp --quiet s3://france-tv-media-cloud-ai/{source_path} {destination_path}"
                 }
             ]
         },
         {
-            "icon": "file_download",
-            "id": 4,
-            "label": "Download file from HTTP",
-            "name": "job_transfer",
+            "icon": "call_split",
+            "id": 1,
+            "label": "Split video in segments",
+            "name": "job_media_splitter",
             "parameters": [
                 {
-                    "id": "source_paths",
-                    "type": "array_of_strings",
-                    "value": [
-                        "index.html"
-                    ]
+                    "id": "number_of_segments",
+                    "type": "integer",
+                    "value": 10
                 },
                 {
-                    "id": "source_secret",
-                    "store": "BACKEND",
+                    "id": "output_parameter_name",
                     "type": "string",
-                    "value": "HTTP_SECRET"
-                }
-            ]
-        },
-        {
-            "icon": "file_upload",
-            "id": 1,
-            "label": "Upload file to FTP",
-            "name": "job_transfer",
-            "parameters": [
-                {
-                    "id": "destination_secret",
-                    "store": "BACKEND",
-                    "type": "string",
-                    "value": "FTP_SECRET"
+                    "value": "media_segments"
                 }
             ],
             "parent_ids": [
@@ -113,48 +96,28 @@
             ]
         },
         {
-            "icon": "file_download",
+            "icon": "psychology",
             "id": 2,
-            "label": "Download file from FTP",
-            "name": "job_transfer",
+            "label": "Object detection",
+            "multiple_jobs": "media_segments",
+            "name": "job_object_detection",
             "parameters": [
                 {
-                    "id": "source_secret",
-                    "store": "BACKEND",
-                    "type": "string",
-                    "value": "FTP_SECRET"
-                }
-            ],
-            "parent_ids": [
-                1
-            ],
-            "required_to_start": [
-                1
-            ]
-        },
-        {
-            "icon": "file_upload",
-            "id": 3,
-            "label": "Upload file to S3",
-            "name": "job_transfer",
-            "parameters": [
-                {
-                    "id": "destination_secret",
-                    "store": "BACKEND",
-                    "type": "string",
-                    "value": "S3_SECRET"
+                    "id": "confidence",
+                    "type": "integer",
+                    "value": 80
                 },
                 {
                     "id": "destination_path",
                     "type": "template",
-                    "value": "{name}"
+                    "value": "{work_directory}/{workflow_id}/object-detection-{sdk_start_index}-{sdk_stop_index}.json"
                 }
             ],
             "parent_ids": [
-                2
+                1
             ],
             "required_to_start": [
-                2
+                1
             ],
             "skip_destination_path": true
         }
@@ -163,6 +126,6 @@
         "demo"
     ],
     "version_major": 0,
-    "version_micro": 2,
-    "version_minor": 1
+    "version_micro": 0,
+    "version_minor": 4
 }

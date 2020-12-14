@@ -1,11 +1,42 @@
 {
     "icon": "sync",
-    "identifier": "demo",
+    "identifier": "file_system_demo",
     "label": "File System Demo",
-    "parameters": [
+    "parameters": [],
+    "rights": [
+        {
+            "action": "view",
+            "groups": [
+                "techinician",
+                "editor"
+            ]
+        },
+        {
+            "action": "create",
+            "groups": [
+                "editor"
+            ]
+        },
+        {
+            "action": "retry",
+            "groups": [
+                "techinician"
+            ]
+        },
+        {
+            "action": "abort",
+            "groups": [
+                "techinician"
+            ]
+        },
+        {
+            "action": "delete",
+            "groups": [
+                "administrator"
+            ]
+        }
     ],
-    "start_parameters": [
-    ],
+    "schema_version": "1.8",
     "steps": [
         {
             "icon": "list",
